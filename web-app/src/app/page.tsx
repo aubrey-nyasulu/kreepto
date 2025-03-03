@@ -1,9 +1,20 @@
-import Image from "next/image";
+import { PearchParams } from "@/types";
+import TopCoins from "@/ui/cards/TopCoins";
+import FetchButton from "@/ui/components/FetchButton";
+import Pagination from "@/ui/components/Pagination";
+import Search from "@/ui/components/Search";
+import Table from "@/ui/components/Table";
 
-export default function Home() {
+export default function Home({ searchParams }: PearchParams) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Kreepto</h1>
+    <main className="container min-h-screen flex flex-col gap-4 p-4 ">
+      <Search />
+
+      <Table searchParams={searchParams} />
+
+      <Pagination />
+
+      <FetchButton currency={searchParams?.currency || 'usd'} />
     </main>
   );
 }

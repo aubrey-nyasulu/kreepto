@@ -95,7 +95,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/aubrey-nyasulu/kreepto/tree/main/docs',
             },
           ],
         },

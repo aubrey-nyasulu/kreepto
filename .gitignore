@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.docusaurus/
+dist/
+build/
+.env
+/web-app/.env.local
+/docs/.env
+

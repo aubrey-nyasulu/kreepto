@@ -75,12 +75,6 @@ const config: Config = {
       // },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Placeholder',
-        },
-        {
           href: 'https://github.com/aubrey-nyasulu/kreepto/tree/main/docs',
           label: 'GitHub',
           position: 'right',

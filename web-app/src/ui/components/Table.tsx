@@ -6,6 +6,7 @@ import { CoinData, PearchParams } from "@/types"
 import Image from "next/image"
 import { currencyHandler, debounce } from "@/lib/utils"
 import TableSkeleton from "../loaders/TableSkeleton"
+import clsx from "clsx"
 
 export default function Table({ searchParams }: PearchParams) {
     const { coinData, loading, fecthCoinData } = useContext(CoinContext)
@@ -23,7 +24,7 @@ export default function Table({ searchParams }: PearchParams) {
     }
 
     return (
-        <div className="relative w-full mx-auto rounded-b-lg flex-1  border rounded-xl overflow-x-auto ">
+        <div className="relative w-full mx-auto rounded-b-lg border rounded-xl overflow-x-auto ">
             <table className="w-full border-collapse">
                 <thead>
                     <tr className="text-left text-gray-600 text-sm font-medium">
@@ -42,43 +43,51 @@ export default function Table({ searchParams }: PearchParams) {
 
                 <tbody className="text-gray-800">
                     {
-                        coinData.map(({ name,
-                            symbol, image, current_price, price_change_percentage_24h, market_cap }, rowIndex) => (
-                            <tr
-                                key={rowIndex}
-                                className="hover:bg-gray-50 cursor-pointer group"
-                            >
-                                <td className=" px-8 py-3 border border-x-0 cursor-context-menu">
-                                    <div className="flex gap-2 items-center">
-                                        <Image
-                                            src={image}
-                                            alt="cryto coin image"
-                                            className="w-8 h-8"
-                                            width={1080}
-                                            height={1080}
-                                        />
+                        coinData?.length > 0
+                            ? coinData.map(({ name,
+                                symbol, image, current_price, price_change_percentage_24h, market_cap }, rowIndex) => (
+                                <tr
+                                    key={rowIndex}
+                                    className="hover:bg-gray-50 cursor-pointer group"
+                                >
+                                    <td className=" px-8 py-3 border border-x-0 cursor-context-menu">
+                                        <div className="flex gap-2 items-center">
+                                            <Image
+                                                src={image}
+                                                alt="cryto coin image"
+                                                className="w-8 h-8"
+                                                width={1080}
+                                                height={1080}
+                                            />
 
-                                        {name} - {symbol}
-                                    </div>
-                                </td>
+                                            {name} - {symbol}
+                                        </div>
+                                    </td>
 
-                                <td className=" px-8 py-3 border border-x-0 cursor-context-menu">
-                                    {currencyHandler(currency)}
-                                    {" "}
-                                    {current_price.toLocaleString()}
-                                </td>
+                                    <td className=" px-8 py-3 border border-x-0 cursor-context-menu">
+                                        {currencyHandler(currency)}
+                                        {" "}
+                                        {current_price.toLocaleString()}
+                                    </td>
 
-                                <td className={`px-8 py-3 border border-x-0 cursor-context-menu ${price_change_percentage_24h > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                    {price_change_percentage_24h.toFixed(2)}
-                                </td>
+                                    <td className={clsx(
+                                        "px-8 py-3 border border-x-0 cursor-context-menu",
+                                        {
+                                            'text-green-500': price_change_percentage_24h > 0,
+                                            'text-red-500': price_change_percentage_24h <= 0
+                                        }
+                                    )}>
+                                        {price_change_percentage_24h.toFixed(2)}
+                                    </td>
 
-                                <td className=" px-8 py-3 border border-x-0 cursor-context-menu">
-                                    {currencyHandler(currency)}
-                                    {" "}
-                                    {market_cap.toLocaleString()}
-                                </td>
-                            </tr>
-                        ))
+                                    <td className=" px-8 py-3 border border-x-0 cursor-context-menu">
+                                        {currencyHandler(currency)}
+                                        {" "}
+                                        {market_cap.toLocaleString()}
+                                    </td>
+                                </tr>
+                            ))
+                            : <p className="p-4">No Results Available</p>
                     }
                 </tbody>
             </table>
